@@ -6,6 +6,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -49,11 +50,32 @@ public class UserService {
         boolean isAcceptable = userRepository.findByFirstNameOrLastName(firstName, lastName).isEmpty();
         return isAcceptable;
     }
-
     public void addUser(User user) {
         userRepository.save(user);
     }
-}
+
+
+ public List<User> getUsers(String attribute, int page, int size) {
+        Pageable pageable = PageRequest.of(page, size, Sort.by(attribute).ascending());
+
+        Page<User> userPage = userRepository.findAll(pageable);
+        return userPage.getContent();
+    }
+
+
+    }
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

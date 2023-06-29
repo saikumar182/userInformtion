@@ -39,7 +39,7 @@ public class UserController {
     ) {
         Page<User> userPage = userService.getAllDetails(pageNumber, pageSize, sortAttribute);
         return ResponseEntity.ok(userPage);
-    }
+  }
 
     @PostMapping
     public ResponseEntity<String> addUser(@RequestBody User user) {
@@ -49,9 +49,24 @@ public class UserController {
             userService.addUser(user);
             return ResponseEntity.ok("User details accepted.");
         } else {
+
             return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body("Firstname or lastname are already exists.");
-        }
+
+
+            }
+
+    }
+
+
+
+    @GetMapping
+    public ResponseEntity<List<User>> getUsers(
+            @RequestParam(value = "attribute") String attribute,
+            @RequestParam(value = "page", defaultValue = "0") int page,
+            @RequestParam(value = "size", defaultValue = "10") int size
+    ) {
+        List<User> users = userService.getUsers(attribute, page, size);
+        return ResponseEntity.ok(users);
     }
 }
-
 

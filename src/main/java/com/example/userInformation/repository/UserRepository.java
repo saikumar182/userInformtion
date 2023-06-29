@@ -3,6 +3,7 @@ package com.example.userInformation.repository;
 import com.example.userInformation.entity.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -15,9 +16,10 @@ public interface UserRepository extends JpaRepository<User,Integer> {
 
     CharSequence findByFirstNameOrLastName(String firstName, String lastName);
 
+    Page<User> findAll(Specification<User> specification, Pageable pageable);
+
 //    Page<User> findAll(Pageable pageable);
 
 
 
 }
-
