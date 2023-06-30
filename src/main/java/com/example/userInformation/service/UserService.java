@@ -25,9 +25,6 @@ public class UserService {
     public List<User> getAllUsers() {
         return userRepository.findAll();
     }
-//    public Page<User> getAllUsers(Pageable pageable) {
-//        return userRepository.findAll(pageable);
-//    }
 
     public List<User> getUsersByFirstName(String firstName) {
         return userRepository.findByFirstName(firstName);
@@ -55,7 +52,7 @@ public class UserService {
     }
 
 
- public List<User> getUsers(String attribute, int page, int size) {
+    public List<User> getUsers(String attribute, int page, int size) {
         Pageable pageable = PageRequest.of(page, size, Sort.by(attribute).ascending());
 
         Page<User> userPage = userRepository.findAll(pageable);
@@ -63,7 +60,54 @@ public class UserService {
     }
 
 
-    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//    public Page<User> getAllDetails(int pageNumber, int pageSize, String sortAttribute) {
+//        long totalRecords = userRepository.count();
+//
+//        if (pageSize > totalRecords) {
+//            pageSize = (int) totalRecords;
+//        }
+//
+//        Pageable pageable = PageRequest.of(pageNumber, pageSize, Sort.by(sortAttribute).ascending());
+//
+//        Page<User> userPage = userRepository.findAll(pageable);
+//
+//        return userPage;
+//    }
+
+
+
+
+
+
 
 
 

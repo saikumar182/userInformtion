@@ -14,32 +14,32 @@ import java.util.List;
 @RestController
 @RequestMapping("/users")
 public class UserController {
-    private final UserService userService;
+//    private final UserService userService;
 
     @Autowired
-    public UserController(UserService userService) {
-        this.userService = userService;
-    }
-    @GetMapping
-    public List<User> getUsersBySorting(
-            @RequestParam(value = "firstName", required = false) String firstName,
-            @RequestParam(value = "sort", defaultValue = "firstName") String sortField,
-            @RequestParam(value = "page", defaultValue = "0") int page,
-            @RequestParam(value = "size", defaultValue = "10") int size
-    ) {
-        if (firstName != null) {
-            return userService.getUsersByFirstName(firstName);
-        } else {
-            return userService.getUsersSortedByField(sortField, page, size);
-        }
-    }
+    private UserService userService;
+
+
+//    @GetMapping
+//    public List<User> getUsersBySorting(
+//            @RequestParam(value = "firstName", required = false) String firstName,
+//            @RequestParam(value = "sort", defaultValue = "firstName") String sortField,
+//            @RequestParam(value = "page", defaultValue = "0") int page,
+//            @RequestParam(value = "size", defaultValue = "10") int size
+//    ) {
+//        if (firstName != null) {
+//            return userService.getUsersByFirstName(firstName);
+//        } else {
+//            return userService.getUsersSortedByField(sortField, page, size);
+//        }
+//    }
 
     @GetMapping("/{pageNumber}/{pageSize}/{sortAttribute}")
     public ResponseEntity<Page<User>> displayAllDetails(@PathVariable("pageNumber") int pageNumber, @PathVariable("pageSize") int pageSize, @PathVariable("sortAttribute") String sortAttribute
     ) {
         Page<User> userPage = userService.getAllDetails(pageNumber, pageSize, sortAttribute);
         return ResponseEntity.ok(userPage);
-  }
+    }
 
     @PostMapping
     public ResponseEntity<String> addUser(@RequestBody User user) {
@@ -52,21 +52,16 @@ public class UserController {
 
             return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).body("Firstname or lastname are already exists.");
 
-
-            }
+        }
 
     }
-
-
-
     @GetMapping
     public ResponseEntity<List<User>> getUsers(
             @RequestParam(value = "attribute") String attribute,
             @RequestParam(value = "page", defaultValue = "0") int page,
             @RequestParam(value = "size", defaultValue = "10") int size
     ) {
-        List<User> users = userService.getUsers(attribute, page, size);
+        List<User> users = userService.getUsers(attribute, page-1, size);
         return ResponseEntity.ok(users);
     }
 }
-
